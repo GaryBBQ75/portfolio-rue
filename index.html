@@ -57,6 +57,12 @@
   #intro h1{font-family:'Yellowtail','Space Grotesk',cursive;font-weight:400;font-size:clamp(48px,8vw,96px);color:#fff;text-shadow:0 0 12px #ff2d78,0 0 38px #ff2d78}
   .pill.solid{color:#fff}
   #help{bottom:26px}
+  #tel{position:fixed;inset:0;z-index:9;display:none;align-items:center;justify-content:center;background:rgba(4,2,8,.72)}#tel.open{display:flex}
+  .phone{position:relative;width:min(300px,84vw);background:#2b2d33;border-radius:26px 26px 34px 34px;padding:44px 20px 26px;box-shadow:0 0 0 3px #111,0 0 40px rgba(53,255,155,.35)}
+  .phone::before{content:'';position:absolute;left:34px;top:-46px;width:12px;height:52px;background:#111;border-radius:6px}
+  .lcd{background:#8fbf6a;color:#1c2b12;font-family:'VT323',monospace;padding:12px;border-radius:6px;margin-bottom:14px;box-shadow:inset 0 0 0 3px #5d8443}.lcd p{margin:0;font-size:19px;line-height:1.15}.lcd .big{font-size:30px}
+  .key{display:flex;align-items:center;justify-content:center;min-height:48px;margin-top:10px;border-radius:12px;background:#d8d8d2;color:#111;font:600 16px 'Space Grotesk',sans-serif;text-decoration:none}.key:first-of-type{background:#35ff9b}.key:focus-visible{outline:3px solid #fff}
+  #tel-x{position:absolute;right:10px;top:8px;width:36px;height:36px;border:0;border-radius:50%;background:#111;color:#fff;font-size:20px;cursor:pointer}.phone .small{color:#b9b9b9;font:400 12px 'Inter',sans-serif;margin:12px 0 0;text-align:center}
   .brand{font-family:'Tilt Neon','Space Grotesk',sans-serif;font-weight:400;font-size:22px;letter-spacing:.04em;color:#fff;text-shadow:0 0 6px #ff2d78,0 0 16px #ff2d78,0 0 34px #ff2d78;animation:hum 5s infinite}
   .brand i{font-style:normal;animation:buzz 3.7s infinite}.brand i.f2{animation:buzz2 6.1s infinite}
   @keyframes hum{0%,100%{opacity:1}48%{opacity:1}50%{opacity:.82}52%{opacity:1}}
@@ -77,6 +83,7 @@
   <span class="brand" aria-label="Gary Le Grill">Gary Le <i>G</i>ril<i class="f2">l</i></span>
   <span style="display:flex;gap:8px;flex-wrap:wrap">
     <button class="pill" id="b-menu" data-ic="☰" aria-label="Aller à une vitrine" aria-expanded="false" aria-controls="menu">Aller à une vitrine</button>
+    <button class="pill" id="b-tel" data-ic="☎" aria-label="Contact">Contact</button>
     <button class="pill" id="b-snd" data-ic="♪" aria-label="Son" aria-pressed="true">Son : oui</button>
     <button class="pill" id="b-reset" data-ic="⟲" aria-label="Début de la rue">Début de la rue</button>
   </span>
@@ -92,6 +99,14 @@
 <div id="help">← → pour marcher · Maj pour courir · ↑ ou Entrée pour entrer · clic sur une vitrine pour y aller</div>
 <div id="prog" aria-hidden="true"><div id="bar"></div></div>
 <div id="fade" aria-hidden="true"></div>
+<div id="tel" role="dialog" aria-label="Contact" aria-hidden="true"><div class="phone">
+  <button id="tel-x" aria-label="Fermer">×</button>
+  <div class="lcd"><p class="big">GARY LE GRILL</p><p>Directeur artistique · motion · code</p><p>Paris · freelance</p></div>
+  <a class="key" href="tel:+33764161664">☎ 07 64 16 16 64</a>
+  <a class="key" href="https://calendly.com/gary-legrill/30min">▦ Réserver 30 min</a>
+  <a class="key" href="https://garylegrill.com">⌂ garylegrill.com</a>
+  <p class="small">Si le lien d'appel ne s'ouvre pas : 07 64 16 16 64</p>
+</div></div>
 <div id="hud" aria-hidden="true"></div>
 <aside id="panel" aria-label="Détail du projet" aria-hidden="true">
   <button class="close" aria-label="Fermer">×</button>
@@ -128,7 +143,7 @@ const P=[
 ];
 /* enseignes : esprit Pigalle, sans vulgarité */
 const SIGN={'Martell VS':['Very Special','cognac · ouvert la nuit'],'Tessan':['Cabines privées','consultations sans rendez-vous'],'Lunettes Pour Tous':['Peep Show','opticien'],'Grimbergen × Au Bureau':['Happy Hours','brasserie de nuit'],'Sephora Collection':['Le Boudoir','beauté et jeux'],'Renault R.S.':['Grosses cylindrées','garage · 24 h / 24'],'Air France':['7e Ciel','départs toutes les nuits'],'Tapping Now':['Massages','du bout des doigts'],'Radio':['Ondes roses','radio sans pub'],'Collection Daily':['Plaisirs quotidiens','un par jour'],'Studio Pepper & Joy':['Mariages express','faire-part minute']};
-const PERSO={disq:{title:'Disquaire',brand:'Côté perso',year:'Toujours ouvert',tags:'Vinyles · Synthés',pal:['#1c0f1e','#ff3df0'],sign:['Hot Wax','vinyles · cassettes · synthés'],line:'La musique, les vinyles et les machines.',ctx:'Emplacement pour ta culture musicale : les disques qui comptent, les machines que tu utilises, ce que tu produis.',role:'À remplir avec tes références.',out:'Une vitrine perso, pas un projet client.',stack:'Vinyles · Cassettes · Synthés'},
+const PERSO={media:{title:'Médiathèque',brand:'Côté perso',year:'Entrée libre',tags:'Films · Musique',pal:['#1a0d2e','#19e3ff'],line:'Mes films, mes disques, mes goûts. C\'est gratuit.',ctx:'Un vidéo-club un peu ringard où l\'on découvre ce que j\'aime : des VHS de films et un coin musique.',role:'À remplir : une dizaine de films et une dizaine de disques.',out:'Rien à vendre ici, juste de quoi faire connaissance.',stack:'VHS · Vinyles · Cassettes'},disq:{title:'Disquaire',brand:'Côté perso',year:'Toujours ouvert',tags:'Vinyles · Synthés',pal:['#1c0f1e','#ff3df0'],sign:['Hot Wax','vinyles · cassettes · synthés'],line:'La musique, les vinyles et les machines.',ctx:'Emplacement pour ta culture musicale : les disques qui comptent, les machines que tu utilises, ce que tu produis.',role:'À remplir avec tes références.',out:'Une vitrine perso, pas un projet client.',stack:'Vinyles · Cassettes · Synthés'},
  cine:{title:'Cinéma',brand:'Côté perso',year:'Séance de minuit',tags:'Science-fiction',pal:['#0c1424','#19e3ff'],sign:['Séance de minuit','cinéma · science-fiction'],line:'Les films et les livres de science-fiction.',ctx:'Emplacement pour ta culture SF, au cinéma comme en littérature.',role:'À remplir avec tes références.',out:'Une vitrine perso, pas un projet client.',stack:'Films · Romans'},
  gal:{title:'Galerie',brand:'Côté perso',year:'Vernissage permanent',tags:'Art · Peinture',pal:['#1a1410','#ffb000'],sign:['Nu artistique','galerie · atelier de peinture'],line:'L\'art contemporain et la peinture.',ctx:'Emplacement pour ta peinture et les artistes qui t\'inspirent.',role:'À remplir avec tes références.',out:'Une vitrine perso, pas un projet client.',stack:'Peinture · Art contemporain'}};
 const NP=(title,brand,year,zone,tags,pal,line,ctx)=>({title,brand,year,zone,tags,pal,line,ctx,role:'Direction artistique, design et déclinaisons. À compléter.',out:'À compléter.',stack:'Figma · Photoshop · After Effects'});
@@ -139,7 +154,7 @@ P.push(NP('EDF','Énergie','À préciser','Design & Motion','Design',['#0a1630',
  NP('Nostrum Care','Mutuelle santé','En cours','Design & Motion','Design · Web',['#10202a','#3ad6c5'],'Landing pages et parcours partenaires pour une mutuelle.','Mission en cours pour Nostrum Care. Détails à compléter avec toi.'),
  NP('Micromania','Machine à cadeaux, 100 % gagnant','À préciser','Design & Motion','Design · Jeu',['#0a1038','#19a0ff'],'Des jeux d\'activation pour Micromania.','Repris de ton Dribbble : Machine à cadeaux, Le 100 % gagnant, Star Wars, Mange Fever. Détails à compléter.'));
 const byT=t=>P.find(p=>p.title===t);
-const ORDER=['HERO','Martell VS','Tessan','Lunettes Pour Tous','Grimbergen × Au Bureau','disq','Sephora Collection','FDJ','Micromania','Fnac','cine','Renault R.S.','Nissan','Air France','EDF','Nostrum Care','gal','Tapping Now','Radio','Collection Daily','Studio Pepper & Joy','CONTACT'];
+const ORDER=['HERO','Martell VS','Tessan','Lunettes Pour Tous','Grimbergen × Au Bureau','Sephora Collection','FDJ','Micromania','Fnac','Renault R.S.','Nissan','Air France','EDF','Nostrum Care','Tapping Now','Radio','Collection Daily','Studio Pepper & Joy','media','CONTACT'];
 const NEON=['#ff2d78','#19e3ff','#ffb000','#b06cff','#ff4d2e','#35ff9b','#ff3df0'];
 const MOD=7.5;
 const SHOPS=ORDER.map((k,i)=>{const x=i*MOD;if(k==='HERO')return{kind:'hero',x,neon:'#ff2d78',sign:['Gary Le Grill','design · motion · code · ouvert 24 h / 24'],pal:['#1a0d14','#ff2d78']};if(k==='CONTACT')return{kind:'contact',x,neon:'#ff4d2e',sign:['Hôtel Contact','on se rappelle ?'],pal:['#1c0e0a','#ff4d2e'],p:{title:'Contact',brand:'Gary Le Grill',year:'Paris',tags:'Freelance',pal:['#1c0e0a','#ff4d2e'],line:'Un projet, une mission, une idée un peu risquée ?',ctx:'Directeur artistique freelance à Paris. Design, motion, code.',role:'Écris-moi ou réserve un créneau.',out:'gary@garylegrill.com (à confirmer)',stack:'Mail · Calendly · LinkedIn'}};const p=PERSO[k]||byT(k);return{kind:PERSO[k]?'perso':'pro',x,p,pal:p.pal,sign:p.sign||SIGN[p.title]||[p.title,p.brand],neon:NEON[i%NEON.length]};});
@@ -395,6 +410,7 @@ import('./tessan.js').then(m=>{const d=m.default;const s=SHOPS.find(q=>q.drawV);
 
 /* ---------- Les autres boutiques : une identité chacune ---------- */
 const TH={
+ 'Médiathèque':{main:'Médiathèque 2000',sub:'vidéo-club du futur d\'hier · entrée libre',col:'#19e3ff',wall:'#1a0d2e',brand:'VIDEO CLUB',tick:'SOYEZ SYMPA REMBOBINEZ · SÉLECTION DU PATRON · C\'EST GRATUIT · LES GOÛTS ET LES COULEURS SE DISCUTENT ICI · ',hi:'crt',bs:'d3',custom:mediaShop,tags:['be kind rewind','2000'],st:[]},
  'Nostrum Care':{main:'Tous Risques',sub:'assurances · on couvre tout (sauf ça)',col:'#3ad6c5',wall:'#10202a',brand:'NOSTRUM CARE',tick:'ON COUVRE TOUT · SAUF ÇA · ET ÇA · LISEZ LES PETITES LIGNES · FRANCHISE : UN REIN · PROTECTION DE QUARTIER · ',hi:'umbrella',prop:'safe',bs:'gold',tags:['t\'es couvert ?','NOSTRUM'],st:[['DEVIS EN 2 MIN','#3ad6c5'],['REFUS EN 2 SECONDES','#fff']]},
  'Lunettes Pour Tous':{main:'Peep Show',sub:'opticien · 10 € le coup d\'œil',col:'#19e3ff',wall:'#0b2a66',brand:'LUNETTES POUR TOUS',tick:'MATEZ MIEUX · MONTURES POUR VOYEURS · 10 € · 10 MIN · ON VOUS A VU · BORDEAUX VOIT GRAND · ',hi:'eyes',prop:'scope',bs:'blade',tags:['on te voit','ON VOUS A À L\'ŒIL'],st:[['TEST DE VUE GRATUIT','#fff'],['(on regarde aussi)','#19e3ff']]},
  'Grimbergen × Au Bureau':{main:'Happy Hours',sub:'pub à robots · au bureau jusqu\'à 5 h',col:'#ffb000',wall:'#2a1408',brand:'AU BUREAU',tick:'AFTERWORK ÉTERNEL · HEURES SUP NON PAYÉES · TON PATRON EST DÉJÀ LÀ · BRASSIN D\'HIVER GRIMBERGEN · ',hi:'beer',prop:'kegs',custom:pubShop,bs:'paint',tags:['« je finis un dossier »','GRIMBERGEN'],st:[['RÉUNION AU COMPTOIR','#ffd54a'],['NOTE DE FRAIS ACCEPTÉE','#fff']]},
@@ -529,6 +545,31 @@ function fdjShop(g,s,c,nm){s.grp=g;const col=c.col;const fb=box(7.1,3.5,.14,std(
  const st=std('#9aa0a6',.3,{metalness:.9});const tb=new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.04,20),std('#f3ead8',.5));tb.position.set(3.0,.95,-1.3);g.add(tb);const lg=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.8,8),st);lg.position.set(3.0,.56,-1.3);g.add(lg);
  s.bots=[{k:'x',pos:[2.3,.16,-1.3],ry:1.4,col:'#3a3320',em:'#ffd400',anim:'sad_pose'},{k:'r',pos:[3.55,.16,-1.2],ry:-1.5,col:'#19a0ff',anim:'No',h:1.2},{k:'r',pos:[.35,.16,-1.4],ry:-.5,col:'#ffd400',anim:'ThumbsUp',h:1.3}];}
 
+/* Contact : le gros téléphone portable d'époque */
+function contactShop(g,s){s.grp=g;s.tall=true;s.zoom=.7;s.onOpen=openTel;const col='#35ff9b';
+ const mat=new THREE.MeshBasicMaterial({map:neonTex('On se rappelle ?','contact · répond même la nuit','#ff4d2e',true),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,color:new THREE.Color(1.5,1.5,1.5)});mat.toneMapped=false;const sg=new THREE.Mesh(new THREE.PlaneGeometry(5.4,1.35),mat);sg.position.set(0,5.0,-2.6);g.add(sg);s.signMat=mat;
+ const ph=new THREE.Group();const body=std('#2b2d33',.45,{metalness:.3});const b=box(1.7,3.5,.55,body);b.position.y=1.75;ph.add(b);const an=new THREE.Mesh(new THREE.CylinderGeometry(.06,.07,1.3,10),std('#111',.5));an.position.set(-.6,4.1,0);ph.add(an);const tp=new THREE.Mesh(new THREE.SphereGeometry(.09,10,8),glow('#ff3b30',2.4));tp.position.set(-.6,4.8,0);ph.add(tp);
+ const lcd=new THREE.MeshBasicMaterial({map:anim(320,260,(q,t)=>{q.fillStyle='#8fbf6a';q.fillRect(0,0,320,260);q.fillStyle='#1c2b12';q.textAlign='center';const ring=(t%6)<1.6;if(ring&&Math.floor(t*6)%2){q.font='900 34px monospace';q.fillText('APPEL ENTRANT',160,120);q.font='700 24px monospace';q.fillText('un futur client',160,160);}else{q.font='900 30px monospace';q.fillText('GARY LE GRILL',160,48);q.font='700 20px monospace';q.fillText('DA · MOTION · CODE',160,80);q.font='900 30px monospace';q.fillText('07 64 16 16 64',160,132);q.font='700 20px monospace';q.fillText('garylegrill.com',160,172);q.fillText('RDV 30 min : Calendly',160,204);q.font='700 16px monospace';q.fillText('▮▮▮▯  batterie : 3 jours',160,240);}},.15)});const sc=new THREE.Mesh(new THREE.PlaneGeometry(1.4,1.14),lcd);sc.position.set(0,2.65,.285);ph.add(sc);sc.userData.shop=s;clickables.push(sc);
+ for(let r=0;r<4;r++)for(let k=0;k<3;k++){const key=box(.34,.22,.06,r===3&&k!==1?glow(k?'#ff3b30':col,1.6):std('#d8d8d2',.5));key.position.set(-.45+k*.45,1.75-r*.33,.3);ph.add(key);}
+ const ear=box(.9,.08,.04,std('#111',.6));ear.position.set(0,3.35,.29);ph.add(ear);ph.position.set(-.3,.16,-1.3);ph.rotation.z=-.06;ph.rotation.y=.12;g.add(ph);ticks.push(t=>{tp.visible=Math.sin(t*8)>0;ph.rotation.z=-.06+((t%6)<1.6?Math.sin(t*50)*.012:0);});
+ s.bots=[{k:'r',pos:[1.6,.16,-1.2],ry:-1.1,col:'#35ff9b',anim:'Wave',h:1.3},{k:'x',pos:[-2.1,.16,-1.4],ry:1.0,col:'#3a1410',em:'#ff4d2e',anim:'agree'}];}
+/* Médiathèque : le vidéo-club du futur d'hier */
+function mediaShop(g,s,c,nm){s.grp=g;const col=c.col,wall=std(c.wall,.3,{metalness:.2});[[0,.43,7.1,.54],[0,3.17,7.1,.86],[-3.3,1.725,.5,2.06],[2.275,1.725,2.55,2.06]].forEach(([x,y,w,h])=>{const b=box(w,h,.25,wall);b.position.set(x,y,-2.9);g.add(b);});
+ const vit=new THREE.Mesh(new THREE.PlaneGeometry(4.1,2.06),new THREE.MeshPhysicalMaterial({color:'#9ad8ff',transparent:true,opacity:.06,roughness:.03}));vit.position.set(-1.0,1.725,-2.8);g.add(vit);vit.userData.shop=s;clickables.push(vit);[[0,1.03,4.15,.05],[0,-1.03,4.15,.05],[-2.05,0,.05,2.1],[2.05,0,.05,2.1]].forEach(([dx,dy,w,h])=>{const t=box(w,h,.05,nm);t.position.set(-1.0+dx,1.725+dy,-2.74);g.add(t);});
+ const d=new THREE.Mesh(new THREE.PlaneGeometry(1.1,2.3),new THREE.MeshBasicMaterial({map:doorTex('#ff3df0'),color:'#9a9a9a'}));d.position.set(2.5,1.3,-2.76);g.add(d);d.userData.shop=s;clickables.push(d);
+ const fc=mk(256,256),fq=fc.getContext('2d');for(let j=0;j<8;j++)for(let i=0;i<8;i++){fq.fillStyle=(i+j)%2?'#12060f':'#e9e6e0';fq.fillRect(i*32,j*32,32,32);}const ft=T(fc);ft.wrapS=ft.wrapT=THREE.RepeatWrapping;ft.repeat.set(2,1.2);const fl=box(7.2,.05,4,new THREE.MeshStandardMaterial({map:ft,roughness:.2,color:'#777'}));fl.position.set(0,.18,-5);g.add(fl);
+ const bc=mk(1024,480),q=bc.getContext('2d');q.fillStyle='#0c0714';q.fillRect(0,0,1024,480);['SCIENCE-FICTION','CULTE','NANARS ASSUMÉS','À RENDRE HIER'].forEach((cat,r)=>{const y=14+r*116;q.fillStyle='#ff3df0';q.font='900 16px Arial';q.textAlign='left';q.fillText(cat,24,y+12);for(let x=24;x<1000;){const w=rnd(20,30),lean=Math.random()<.08;q.save();q.translate(x,y+20);if(lean)q.rotate(.12);q.fillStyle=['#111','#1b3a8a','#b3261e','#e9aa00','#0f6b4a','#5a2a8a','#e9e6e0'][Math.floor(rnd(0,7))];q.fillRect(0,0,w,84);q.fillStyle='rgba(255,255,255,.85)';q.fillRect(3,8,w-6,22);q.fillStyle='rgba(255,255,255,.4)';q.fillRect(3,58,w-6,6);q.restore();x+=w+2;}q.fillStyle='#2a1a3a';q.fillRect(16,y+104,992,8);});
+ const bw=new THREE.Mesh(new THREE.PlaneGeometry(7.2,3.4),new THREE.MeshBasicMaterial({map:T(bc),color:'#8a8a8a'}));bw.position.set(0,1.87,-6.95);g.add(bw);
+ [-1,1].forEach(k=>{const w=new THREE.Mesh(new THREE.PlaneGeometry(4,3.4),std('#2a0d3a',.85));w.rotation.y=-k*Math.PI/2;w.position.set(k*3.58,1.87,-5);g.add(w);});const ce=new THREE.Mesh(new THREE.PlaneGeometry(7.2,4),std('#07050b',.9));ce.rotation.x=Math.PI/2;ce.position.set(0,3.55,-5);g.add(ce);
+ /* la télé du patron */
+ const tvb=box(1.0,.8,.8,std('#2a241c',.6));tvb.position.set(-2.4,1.25,-5.6);g.add(tvb);const stand=box(.8,.7,.6,std('#15101c',.6));stand.position.set(-2.4,.55,-5.6);g.add(stand);const tv=new THREE.Mesh(new THREE.PlaneGeometry(.78,.6),new THREE.MeshBasicMaterial({map:anim(160,120,(z,t)=>{const m=Math.floor(t/3)%3;if(m===0){['#fff','#ff0','#0ff','#0f0','#f0f','#f00','#00f'].forEach((cc,k)=>{z.fillStyle=cc;z.fillRect(k*23,0,23,120);});}else if(m===1){z.fillStyle='#001a66';z.fillRect(0,0,160,120);z.fillStyle='#fff';z.font='400 20px "VT323",monospace';z.textAlign='center';z.fillText('SÉLECTION',80,50);z.fillText('DU PATRON',80,74);}else{for(let k=0;k<260;k++){z.fillStyle='rgba(255,255,255,'+Math.random()+')';z.fillRect(Math.random()*160,Math.random()*120,4,2);}}},.12)}));tv.position.set(-2.4,1.27,-5.19);g.add(tv);
+ /* le coin musique */
+ const tt=box(1.1,.75,.7,std('#1c1410',.5));tt.position.set(1.2,.57,-5.5);g.add(tt);const disc=new THREE.Mesh(new THREE.CylinderGeometry(.36,.36,.02,40),std('#0a0a0a',.25));disc.position.set(1.2,.97,-5.5);g.add(disc);const lb=new THREE.Mesh(new THREE.CylinderGeometry(.12,.12,.025,24),glow('#ff3df0',1.4));lb.position.set(1.2,.975,-5.5);g.add(lb);const mark=box(.3,.006,.02,std('#555'));mark.position.set(1.2,.985,-5.5);g.add(mark);
+ const cones=[];[.2,2.2].forEach(x=>{const sp=box(.5,1.3,.45,std('#111016',.6));sp.position.set(x,.85,-5.9);g.add(sp);[1.15,.6].forEach((y,i)=>{const co=new THREE.Mesh(new THREE.CircleGeometry(i?.18:.1,20),std('#2a2a30',.4));co.position.set(x,y,-5.67);g.add(co);cones.push(co);});});
+ const il=new THREE.PointLight('#c05cff',16,8,1.5);il.position.set(-.5,2.7,-4.8);g.add(il);ticks.push(t=>{disc.rotation.y=mark.rotation.y=-t*3.4;const k=Math.exp(-((t*2)%1)*5);cones.forEach(co=>co.scale.setScalar(1+.12*k));});
+ s.bots=[{k:'r',pos:[-1.0,.2,-6.2],ry:3.14,col:'#19e3ff',anim:'Yes',h:1.25},{k:'x',pos:[1.2,.2,-4.7],ry:3.14,col:'#e9e6df',em:'#ff3df0',anim:'headShake'},{k:'r',pos:[-2.4,.2,-4.6],ry:3.14,col:'#ffb000',anim:'Idle',h:1.1}];
+ s.focus={pos:[-.3,1.75,-2.3],look:[-.3,1.55,-7]};}
+
 /* ---------- Rue ---------- */
 const world=new THREE.Group();scene.add(world);const clickables=[];
 function building(x,seed,s){const g=new THREE.Group();g.position.x=x;const f=FAC[seed%4];
@@ -539,6 +580,7 @@ function building(x,seed,s){const g=new THREE.Group();g.position.x=x;const f=FAC
   if(!s){const sh=new THREE.Mesh(new THREE.PlaneGeometry(5.6,2.5),new THREE.MeshStandardMaterial({map:SHUT,roughness:.6}));sh.position.set(0,1.35,-2.84);g.add(sh);world.add(g);return;}
   if(s.p&&s.p.title==='Martell VS'){martell(g,s);world.add(g);return;}
   if(s.p&&s.p.title==='Tessan'){tessan(g,s);world.add(g);return;}
+  if(s.kind==='contact'){contactShop(g,s);world.add(g);return;}
   if(s.p&&TH[s.p.title]){themed(g,s,TH[s.p.title]);world.add(g);return;}
   const nm=glow(s.neon,2.0);
   const vit=new THREE.Mesh(new THREE.PlaneGeometry(3.5,2.19),new THREE.MeshBasicMaterial({map:vitrineTex(s),color:'#d8d8d8'}));vit.position.set(-1.15,1.5,-2.84);g.add(vit);vit.userData.shop=s;clickables.push(vit);
@@ -623,10 +665,11 @@ const panel=$('panel');
 function openPanel(p){$('p-title').textContent=p.title;$('p-meta').textContent=p.brand+' · '+p.year+' · '+p.tags;$('p-line').textContent=p.line;$('p-ctx').textContent=p.ctx;$('p-role').textContent=p.role;$('p-out').textContent=p.out;$('p-stack').textContent=p.stack;$('p-media').style.background=`radial-gradient(circle at 70% 30%, ${p.pal[1]}, ${p.pal[0]} 72%)`;const pm=$('p-media');pm.textContent='[Galerie, vidéo et images]';if(p.title==='Martell VS'&&AD&&AD.videoWidth){pm.textContent='';const v=document.createElement('video');v.src=AD.src;v.muted=true;v.loop=true;v.autoplay=true;v.controls=true;v.playsInline=true;v.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:10px';pm.style.padding='0';pm.appendChild(v);}else pm.style.padding='';panel.classList.add('open');panel.setAttribute('aria-hidden','false');panelOpen=true;}
 function closePanel(){panel.classList.remove('open');panel.setAttribute('aria-hidden','true');panelOpen=false;}
 panel.querySelector('.close').onclick=closePanel;
-function enter(){if(near&&near.p)openPanel(near.p);}
+function enter(){if(near&&near.onOpen){near.onOpen();return;}if(near&&near.p)openPanel(near.p);}
+const tel=$('tel');function openTel(){tel.classList.add('open');tel.setAttribute('aria-hidden','false');}function closeTel(){tel.classList.remove('open');tel.setAttribute('aria-hidden','true');}$('b-tel').onclick=openTel;$('tel-x').onclick=closeTel;tel.addEventListener('click',e=>{if(e.target===tel)closeTel();});
 function start(){started=true;$('intro').classList.add('off');audioStart();}
 $('b-start').onclick=start;$('cap-b').onclick=enter;
-addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();$('menu').classList.remove('open');return;}if(!started&&(e.key==='Enter'||e.key===' ')){start();return;}keys[e.key.toLowerCase()]=true;if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(e.key.toLowerCase()))e.preventDefault();if((e.key==='Enter'||e.key==='ArrowUp'||e.key.toLowerCase()==='z')&&started&&!panelOpen)enter();if(['arrowleft','arrowright','q','a','d'].includes(e.key.toLowerCase())){ME.tx=null;if(panelOpen)closePanel();}});
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeTel();closePanel();$('menu').classList.remove('open');return;}if(!started&&(e.key==='Enter'||e.key===' ')){start();return;}keys[e.key.toLowerCase()]=true;if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(e.key.toLowerCase()))e.preventDefault();if((e.key==='Enter'||e.key==='ArrowUp'||e.key.toLowerCase()==='z')&&started&&!panelOpen)enter();if(['arrowleft','arrowright','q','a','d'].includes(e.key.toLowerCase())){ME.tx=null;if(panelOpen)closePanel();}});
 addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
 addEventListener('wheel',e=>{if(panelOpen||!started)return;const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;ME.tx=Math.max(X0,Math.min(X1,(ME.tx??ME.x)+d*.03));},{passive:true});
 const ray=new THREE.Raycaster(),m2=new THREE.Vector2();let pd=null;
