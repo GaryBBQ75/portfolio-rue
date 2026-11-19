@@ -57,6 +57,8 @@
   #intro h1{font-family:'Yellowtail','Space Grotesk',cursive;font-weight:400;font-size:clamp(48px,8vw,96px);color:#fff;text-shadow:0 0 12px #ff2d78,0 0 38px #ff2d78}
   .pill.solid{color:#fff}
   #help{bottom:26px}
+  #c{touch-action:none}.how.t{display:none;list-style:none;padding:0;margin:14px 0 20px;text-align:left}.how.t li{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:15px}.how.t b{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,45,120,.18);color:#ff2d78;font-size:17px}
+  @media (pointer:coarse),(max-width:700px){.how.k{display:none}.how.t{display:block}#intro>div{padding:0 22px;max-width:420px}#intro h1{font-size:clamp(44px,15vw,72px);margin:.1em 0 .2em}#intro .pill.solid{width:100%;justify-content:center;min-height:52px;font-size:17px}}
   #tel{position:fixed;inset:0;z-index:9;display:none;align-items:center;justify-content:center;background:rgba(4,2,8,.72)}#tel.open{display:flex}
   .phone{position:relative;width:min(300px,84vw);background:#2b2d33;border-radius:26px 26px 34px 34px;padding:44px 20px 26px;box-shadow:0 0 0 3px #111,0 0 40px rgba(53,255,155,.35)}
   .phone::before{content:'';position:absolute;left:34px;top:-46px;width:12px;height:52px;background:#111;border-radius:6px}
@@ -92,7 +94,9 @@
 <div id="intro"><div>
   <p class="eye">Directeur artistique · Design, motion et code</p>
   <h1>Ouvert la nuit</h1>
-  <p>Une rue de Paris, des pavés mouillés, des néons. Derrière chaque vitrine, un projet. <br><kbd>←</kbd> <kbd>→</kbd> pour marcher, <kbd>Maj</kbd> pour courir, <kbd>↑</kbd> ou <kbd>Entrée</kbd> pour entrer. Sur mobile, appuie à gauche ou à droite de l'écran.</p>
+  <p>Une rue de Paris, des pavés mouillés, des néons. Derrière chaque vitrine, un projet.</p>
+  <p class="how k"><kbd>←</kbd> <kbd>→</kbd> pour marcher, <kbd>Maj</kbd> pour courir, <kbd>↑</kbd> ou <kbd>Entrée</kbd> pour entrer.</p>
+  <ul class="how t"><li><b>⟷</b> Glisse le doigt pour avancer dans la rue</li><li><b>☝</b> Touche une vitrine pour y aller</li><li><b>→</b> « Entrer » pour voir le projet</li><li><b>☎</b> Contact, toujours en haut</li></ul>
   <button class="pill solid" id="b-start">Entrer dans la rue <span aria-hidden="true">→</span></button>
 </div></div>
 <section id="cap" aria-live="polite"><p class="n" id="cap-n"></p><h2 id="cap-t"></h2><p class="l" id="cap-l"></p><button class="pill solid" id="cap-b">Entrer <span aria-hidden="true">→</span></button></section>
@@ -674,8 +678,8 @@ addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
 addEventListener('wheel',e=>{if(panelOpen||!started)return;const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;ME.tx=Math.max(X0,Math.min(X1,(ME.tx??ME.x)+d*.03));},{passive:true});
 const ray=new THREE.Raycaster(),m2=new THREE.Vector2();let pd=null;
 $('c').addEventListener('pointerdown',e=>{if(!started)return;pd={x:e.clientX,y:e.clientY,t:performance.now()};hold=e.clientX<innerWidth/2?-1:1;if(panelOpen)closePanel();});
-addEventListener('pointerup',e=>{const wasHold=pd&&performance.now()-pd.t>220;hold=0;if(!pd)return;const tap=!wasHold&&Math.hypot(e.clientX-pd.x,e.clientY-pd.y)<8;pd=null;if(!tap)return;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);const h=ray.intersectObjects(clickables)[0];if(h&&h.object.userData.spin){h.object.userData.spin();return;}if(h){const s=h.object.userData.shop;ME.tx=s.x+2.05;ME.then=s;}else{const pl=new THREE.Plane(new THREE.Vector3(0,1,0),0),pt3=new THREE.Vector3();if(ray.ray.intersectPlane(pl,pt3))ME.tx=Math.max(X0,Math.min(X1,pt3.x));}});
-$('c').addEventListener('pointermove',e=>{if(pd&&performance.now()-pd.t>220)hold=e.clientX<innerWidth/2?-1:1;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);$('c').style.cursor=ray.intersectObjects(clickables).length?'pointer':'default';});
+addEventListener('pointerup',e=>{const wasHold=pd&&performance.now()-pd.t>220;hold=0;if(!pd)return;if(pd.drag){pd=null;return;}const tap=!wasHold&&Math.hypot(e.clientX-pd.x,e.clientY-pd.y)<8;pd=null;if(!tap)return;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);const h=ray.intersectObjects(clickables)[0];if(h&&h.object.userData.spin){h.object.userData.spin();return;}if(h){const s=h.object.userData.shop;ME.tx=s.x+2.05;ME.then=s;}else{const pl=new THREE.Plane(new THREE.Vector3(0,1,0),0),pt3=new THREE.Vector3();if(ray.ray.intersectPlane(pl,pt3))ME.tx=Math.max(X0,Math.min(X1,pt3.x));}});
+$('c').addEventListener('pointermove',e=>{if(pd&&e.pointerType!=='mouse'){const dx=e.clientX-(pd.lx??pd.x);pd.lx=e.clientX;if(Math.abs(e.clientX-pd.x)>10)pd.drag=true;if(pd.drag){hold=0;ME.tx=Math.max(X0,Math.min(X1,(ME.tx??ME.x)-dx*.05));return;}}if(pd&&!pd.drag&&performance.now()-pd.t>220)hold=e.clientX<innerWidth/2?-1:1;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);$('c').style.cursor=ray.intersectObjects(clickables).length?'pointer':'default';});
 /* menu */
 const menu=$('menu');SHOPS.filter(s=>s.p).forEach(s=>{const b=document.createElement('button');b.innerHTML=`<span>${s.p.title}</span><small>${s.kind==='pro'?s.p.zone:s.kind==='perso'?'Perso':''}</small>`;b.onclick=()=>{menu.classList.remove('open');$('b-menu').setAttribute('aria-expanded','false');if(!started)start();closePanel();fadeTo(s.x+.6);};menu.appendChild(b);});
 $('b-menu').onclick=()=>{const o=menu.classList.toggle('open');$('b-menu').setAttribute('aria-expanded',o);};
