@@ -57,8 +57,14 @@
   #intro h1{font-family:'Yellowtail','Space Grotesk',cursive;font-weight:400;font-size:clamp(48px,8vw,96px);color:#fff;text-shadow:0 0 12px #ff2d78,0 0 38px #ff2d78}
   .pill.solid{color:#fff}
   #help{bottom:26px}
+  .brand{font-family:'Tilt Neon','Space Grotesk',sans-serif;font-weight:400;font-size:22px;letter-spacing:.04em;color:#fff;text-shadow:0 0 6px #ff2d78,0 0 16px #ff2d78,0 0 34px #ff2d78;animation:hum 5s infinite}
+  .brand i{font-style:normal;animation:buzz 3.7s infinite}.brand i.f2{animation:buzz2 6.1s infinite}
+  @keyframes hum{0%,100%{opacity:1}48%{opacity:1}50%{opacity:.82}52%{opacity:1}}
+  @keyframes buzz{0%,62%,66%,70%,100%{opacity:1;text-shadow:inherit}64%,68%{opacity:.25;text-shadow:none}84%{opacity:.5}86%{opacity:1}}
+  @keyframes buzz2{0%,30%,100%{opacity:1}31%,33%{opacity:.15;text-shadow:none}32%{opacity:.9}34%{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.brand,.brand i{animation:none}}
   #b-snd[aria-pressed="false"]{opacity:.45}
-  @media (max-width:700px){header{padding:10px 12px}.brand{font-size:14px}header .pill{min-height:38px;min-width:38px;padding:0 10px;font-size:0;justify-content:center}header .pill::before{content:attr(data-ic);font-size:17px}#help{display:none}#cap{left:14px;bottom:26px;max-width:78%}#cap h2{font-size:24px}#cap p.l{font-size:13px;margin-bottom:10px}#prog{left:12px;right:12px}}
+  @media (max-width:700px){header{padding:10px 12px}.brand{font-size:19px}header .pill{min-height:38px;min-width:38px;padding:0 10px;font-size:0;justify-content:center}header .pill::before{content:attr(data-ic);font-size:17px}#help,#hud{display:none}#cap{left:14px;bottom:26px;max-width:78%}#cap h2{font-size:24px}#cap p.l{font-size:13px;margin-bottom:10px}#prog{left:12px;right:12px}}
   #hud{position:fixed;right:26px;bottom:30px;z-index:4;font-family:'VT323',monospace;font-size:24px;letter-spacing:.06em;color:#f2f2f2;text-shadow:2px 0 #ff2d78,-2px 0 #39d6ff;opacity:.8;pointer-events:none}
   @media (pointer:coarse){#hud{display:none}}
   @media (pointer:coarse){#cap{bottom:40px}}
@@ -68,7 +74,7 @@
 <body>
 <canvas id="c" aria-label="Une rue de Paris la nuit, en 3D, à parcourir à pied"></canvas>
 <header>
-  <span class="brand">Gary Le Grill</span>
+  <span class="brand" aria-label="Gary Le Grill">Gary Le <i>G</i>ril<i class="f2">l</i></span>
   <span style="display:flex;gap:8px;flex-wrap:wrap">
     <button class="pill" id="b-menu" data-ic="☰" aria-label="Aller à une vitrine" aria-expanded="false" aria-controls="menu">Aller à une vitrine</button>
     <button class="pill" id="b-snd" data-ic="♪" aria-label="Son" aria-pressed="true">Son : oui</button>
@@ -651,7 +657,7 @@ function tick(now){requestAnimationFrame(tick);const dt=Math.max(0,Math.min(.05,
   rig.body.rotation.x=(.06+.16*rn)*a;rig.body.position.y=Math.sin(tt*1.6)*.006*idle;rig.body.rotation.y=Math.sin(ME.ph)*.12*a;rig.head.rotation.y=-Math.sin(ME.ph)*.08*a+Math.sin(tt*.5)*.25*idle;
   /* caméra */
   camX+=(ME.x+ME.v*.4-camX)*Math.min(1,dt*3.2);const narrow=cam.aspect<1;
-  const tall=SHOPS.find(q=>q.tall&&Math.abs(ME.x-q.x)<4.2);camK+=((tall?(tall.zoom??1):0)-camK)*Math.min(1,dt*1.8);cam.position.set(camX+(narrow?0:1.1)*(1-camK),1.95+(narrow?.6:0),13.4+(narrow?4.5:0)+4.4*camK*(narrow?.5:1));lookV.set(camX+(narrow?0:1.1)*(1-camK)+ME.v*.05,2.35+(narrow?2.9+1.3*camK:2.2*camK),-3);{const fs=panelOpen&&near&&near.focus?near:null;if(fs)focusS=fs;camF+=((fs?1:0)-camF)*Math.min(1,dt*2.4);if(camF>.002&&focusS){const f=focusS.focus;camA.set(focusS.x+f.pos[0],f.pos[1],f.pos[2]);cam.position.lerp(camA,camF);camA.set(focusS.x+f.look[0],f.look[1],f.look[2]);lookV.lerp(camA,camF);}me.visible=camF<.45;window.__in=focusS&&focusS.inside?camF:0;}cam.lookAt(lookV);
+  const tall=SHOPS.find(q=>q.tall&&Math.abs(ME.x-q.x)<4.2);camK+=((tall?(tall.zoom??1):0)-camK)*Math.min(1,dt*1.8);cam.position.set(camX+(narrow?0:1.1)*(1-camK),narrow?2.3:1.95,narrow?11.2+1.8*camK:13.4+4.4*camK);lookV.set(camX+(narrow?0:1.1)*(1-camK)+ME.v*.05,narrow?2.25+1.1*camK:2.35+2.2*camK,-3);{const fs=panelOpen&&near&&near.focus?near:null;if(fs)focusS=fs;camF+=((fs?1:0)-camF)*Math.min(1,dt*2.4);if(camF>.002&&focusS){const f=focusS.focus;camA.set(focusS.x+f.pos[0],f.pos[1],f.pos[2]);cam.position.lerp(camA,camF);camA.set(focusS.x+f.look[0],f.look[1],f.look[2]);lookV.lerp(camA,camF);}me.visible=camF<.45;window.__in=focusS&&focusS.inside?camF:0;}cam.lookAt(lookV);
   /* lumières des vitrines proches */
   const sorted=SHOPS.slice().sort((p,q)=>Math.abs(p.x-ME.x)-Math.abs(q.x-ME.x));pool.forEach((l,i)=>{const s=sorted[i];l.position.set(s.x,2.4,-.9);l.color.set(s.neon);l.intensity=34;});
   /* néons qui grésillent */
