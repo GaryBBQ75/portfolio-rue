@@ -60,6 +60,8 @@
   #lens{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;filter:blur(.6px)}
   #c{touch-action:none}.how.t{display:none;list-style:none;padding:0;margin:14px 0 20px;text-align:left}.how.t li{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:15px}.how.t b{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,45,120,.18);color:#ff2d78;font-size:17px}
   @media (pointer:coarse),(max-width:700px){.how.k{display:none}.how.t{display:block}#intro>div{padding:0 22px;max-width:420px}#intro h1{font-size:clamp(44px,15vw,72px);margin:.1em 0 .2em}#intro .pill.solid{width:100%;justify-content:center;min-height:52px;font-size:17px}}
+  #cv{position:fixed;inset:0;z-index:9;display:none;align-items:center;justify-content:center;background:rgba(4,2,8,.8);padding:16px}#cv.open{display:flex}.cvc{position:relative;width:min(560px,100%);max-height:88vh;overflow:auto;background:#0d0b12;border:2px solid #ff2d78;border-radius:14px;padding:26px 24px;box-shadow:0 0 40px rgba(255,45,120,.4);color:#e9e5dc;font:400 15px/1.5 'Inter',sans-serif}.cvc h2{font:700 34px 'Space Grotesk',sans-serif;color:#fff;margin:4px 0}.cvc .role{color:#ffd400;font-weight:600;margin:0 0 10px}.cvc h3{font:700 13px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#ff2d78;margin:18px 0 6px}.cvc ul{list-style:none;padding:0;margin:0}.cvc li{margin:4px 0}.cvc li b{display:inline-block;min-width:74px;color:#35ff9b}.cvc a{color:#35ff9b}.cvc p{margin:6px 0}#cv-x{position:absolute;right:10px;top:8px;width:36px;height:36px;border:0;border-radius:50%;background:#1c1824;color:#fff;font-size:20px;cursor:pointer}#intro .cl{font:500 12px 'JetBrains Mono',monospace;color:rgba(255,255,255,.6);letter-spacing:.04em}
+  .pad{display:none;position:fixed;top:56%;z-index:4;width:60px;height:60px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);background:rgba(10,8,14,.45);color:#fff;font-size:22px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;backdrop-filter:blur(4px)}.pad.on{background:#ff2d78;border-color:#ff2d78}#pad-l{left:10px}#pad-r{right:10px}@media (pointer:coarse),(max-width:700px){.pad{display:block}}html,body{touch-action:none;overscroll-behavior:none}.cvc,#panel,#menu{touch-action:pan-y}
   #tel{position:fixed;inset:0;z-index:9;display:none;align-items:center;justify-content:center;background:rgba(4,2,8,.72)}#tel.open{display:flex}
   .phone{position:relative;width:min(300px,84vw);background:#2b2d33;border-radius:26px 26px 34px 34px;padding:44px 20px 26px;box-shadow:0 0 0 3px #111,0 0 40px rgba(53,255,155,.35)}
   .phone::before{content:'';position:absolute;left:34px;top:-46px;width:12px;height:52px;background:#111;border-radius:6px}
@@ -86,6 +88,7 @@
   <span class="brand" aria-label="Gary Le Grill">Gary Le <i>G</i>ril<i class="f2">l</i></span>
   <span style="display:flex;gap:8px;flex-wrap:wrap">
     <button class="pill" id="b-menu" data-ic="☰" aria-label="Aller à une vitrine" aria-expanded="false" aria-controls="menu">Aller à une vitrine</button>
+    <button class="pill" id="b-cv" data-ic="CV" aria-label="CV express">CV</button>
     <button class="pill" id="b-tel" data-ic="☎" aria-label="Contact">Contact</button>
     <button class="pill" id="b-snd" data-ic="♪" aria-label="Son" aria-pressed="true">Son : oui</button>
     <button class="pill" id="b-reset" data-ic="⟲" aria-label="Début de la rue">Début de la rue</button>
@@ -93,12 +96,14 @@
 </header>
 <nav id="menu" aria-label="Vitrines"></nav>
 <div id="intro"><div>
-  <p class="eye">Directeur artistique · Design, motion et code</p>
-  <h1>Ouvert la nuit</h1>
-  <p>Une rue de Paris, des pavés mouillés, des néons. Derrière chaque vitrine, un projet.</p>
+  <p class="eye">Portfolio · Gary Le Grill · Paris</p>
+  <h1>Design &amp; Code</h1>
+  <p><b>Directeur artistique, motion designer et développeur freelance.</b> Ceci est mon portfolio : une rue de Paris, la nuit. Derrière chaque vitrine, un projet client.</p>
+  <p class="cl">Pernod Ricard · Sephora · Air France · Renault · EDF · FDJ · Fnac · Tessan</p>
   <p class="how k"><kbd>←</kbd> <kbd>→</kbd> pour marcher, <kbd>Maj</kbd> pour courir, <kbd>↑</kbd> ou <kbd>Entrée</kbd> pour entrer.</p>
-  <ul class="how t"><li><b>⟷</b> Glisse le doigt pour avancer dans la rue</li><li><b>☝</b> Touche une vitrine pour y aller</li><li><b>→</b> « Entrer » pour voir le projet</li><li><b>☎</b> Contact, toujours en haut</li></ul>
+  <ul class="how t"><li><b>◀▶</b> Maintiens une flèche pour marcher, puis courir</li><li><b>☝</b> Touche une vitrine pour y aller</li><li><b>→</b> « Entrer » pour voir le projet</li><li><b>☎</b> Contact, toujours en haut</li></ul>
   <button class="pill solid" id="b-start">Entrer dans la rue <span aria-hidden="true">→</span></button>
+  <button class="pill" id="b-cv2" style="margin-top:10px">Pas le temps ? Le CV express</button>
 </div></div>
 <section id="cap" aria-live="polite"><p class="n" id="cap-n"></p><h2 id="cap-t"></h2><p class="l" id="cap-l"></p><button class="pill solid" id="cap-b">Entrer <span aria-hidden="true">→</span></button></section>
 <div id="help">← → pour marcher · Maj pour courir · ↑ ou Entrée pour entrer · clic sur une vitrine pour y aller</div>
@@ -113,6 +118,20 @@
   <a class="key" href="https://garylegrill.com">⌂ garylegrill.com</a>
   <p class="small">Si le lien d'appel ne s'ouvre pas : 07 64 16 16 64</p>
 </div></div>
+<div id="cv" role="dialog" aria-label="CV express" aria-hidden="true"><div class="cvc">
+  <button id="cv-x" aria-label="Fermer">×</button>
+  <p class="eye">CV express</p>
+  <h2>Gary Le Grill</h2>
+  <p class="role">Design &amp; Code · directeur artistique, motion designer, développeur</p>
+  <p>Freelance à Paris depuis plus de 10 ans, pour des agences et des annonceurs. Un seul interlocuteur, de l'idée à la mise en ligne.</p>
+  <h3>Compétences</h3>
+  <ul><li><b>Design</b> direction artistique, identité, campagne, UI/UX</li><li><b>Motion</b> motion design, film, 3D temps réel</li><li><b>Code</b> React, Three.js, Lovable, Bubble, Webflow, WordPress</li><li><b>IA</b> image et vidéo génératives</li></ul>
+  <h3>Clients</h3>
+  <p>Pernod Ricard (Martell), Sephora, Air France, Renault, Nissan, EDF, FDJ, Fnac, Micromania, MACSF, Tessan, Nostrum Care, Lunettes Pour Tous, Grimbergen × Au Bureau.</p>
+  <h3>Contact</h3>
+  <p><a href="tel:+33764161664">07 64 16 16 64</a> · <a href="https://calendly.com/gary-legrill/30min">Réserver 30 min</a></p>
+</div></div>
+<button id="pad-l" class="pad" aria-label="Marcher vers la gauche">◀</button><button id="pad-r" class="pad" aria-label="Marcher vers la droite">▶</button>
 <div id="hud" aria-hidden="true"></div>
 <aside id="panel" aria-label="Détail du projet" aria-hidden="true">
   <button class="close" aria-label="Fermer">×</button>
@@ -778,14 +797,17 @@ panel.querySelector('.close').onclick=closePanel;
 function enter(){if(INSIDE){if(zone&&zone.exit)leaveMedia();return;}if(near&&near.onOpen){near.onOpen();return;}if(near&&near.p)openPanel(near.p);}
 const tel=$('tel');function openTel(){tel.classList.add('open');tel.setAttribute('aria-hidden','false');}function closeTel(){tel.classList.remove('open');tel.setAttribute('aria-hidden','true');}$('b-tel').onclick=openTel;$('tel-x').onclick=closeTel;tel.addEventListener('click',e=>{if(e.target===tel)closeTel();});
 function start(){started=true;$('intro').classList.add('off');audioStart();}
+const cv=$('cv');function openCV(){cv.classList.add('open');cv.setAttribute('aria-hidden','false');}function closeCV(){cv.classList.remove('open');cv.setAttribute('aria-hidden','true');}$('b-cv').onclick=openCV;$('b-cv2').onclick=openCV;$('cv-x').onclick=closeCV;cv.addEventListener('click',e=>{if(e.target===cv)closeCV();});addEventListener('keydown',e=>{if(e.key==='Escape')closeCV();});
 $('b-start').onclick=start;$('cap-b').onclick=enter;
 addEventListener('keydown',e=>{if(e.key==='Escape'){closeTel();closePanel();$('menu').classList.remove('open');return;}if(!started&&(e.key==='Enter'||e.key===' ')){start();return;}keys[e.key.toLowerCase()]=true;if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(e.key.toLowerCase()))e.preventDefault();if((e.key==='Enter'||e.key==='ArrowUp'||e.key.toLowerCase()==='z')&&started&&!panelOpen)enter();if(['arrowleft','arrowright','q','a','d'].includes(e.key.toLowerCase())){ME.tx=null;if(panelOpen)closePanel();}});
 addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
 addEventListener('wheel',e=>{if(panelOpen||!started)return;const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;ME.tx=Math.max(LO,Math.min(HI,(ME.tx??ME.x)+d*.016));},{passive:true});
 const ray=new THREE.Raycaster(),m2=new THREE.Vector2();let pd=null;
 $('c').addEventListener('pointerdown',e=>{if(!started)return;pd={x:e.clientX,y:e.clientY,t:performance.now()};hold=e.clientX<innerWidth/2?-1:1;if(panelOpen)closePanel();});
+addEventListener('pointercancel',()=>{hold=0;pd=null;});
+['pad-l','pad-r'].forEach((id,k)=>{const b=$(id),d=k?1:-1;const on=e=>{e.preventDefault();if(!started)return;if(panelOpen)closePanel();hold=d;b.classList.add('on');try{b.setPointerCapture(e.pointerId);}catch(_){}} ,off=()=>{if(hold===d)hold=0;b.classList.remove('on');};b.addEventListener('pointerdown',on);['pointerup','pointercancel','lostpointercapture'].forEach(n=>b.addEventListener(n,off));b.addEventListener('contextmenu',e=>e.preventDefault());});
 addEventListener('pointerup',e=>{const wasHold=pd&&performance.now()-pd.t>220;hold=0;if(!pd)return;if(pd.drag){pd=null;return;}const tap=!wasHold&&Math.hypot(e.clientX-pd.x,e.clientY-pd.y)<8;pd=null;if(!tap)return;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);const h=ray.intersectObjects(clickables)[0];if(h&&h.object.userData.spin){h.object.userData.spin();return;}if(h){const s=h.object.userData.shop;ME.tx=s.x+2.05;ME.then=s;}else{const pl=new THREE.Plane(new THREE.Vector3(0,1,0),0),pt3=new THREE.Vector3();if(ray.ray.intersectPlane(pl,pt3))ME.tx=Math.max(LO,Math.min(HI,pt3.x));}});
-$('c').addEventListener('pointermove',e=>{if(pd&&e.pointerType!=='mouse'){const dx=e.clientX-(pd.lx??pd.x);pd.lx=e.clientX;if(Math.abs(e.clientX-pd.x)>10)pd.drag=true;if(pd.drag){hold=0;ME.tx=Math.max(LO,Math.min(HI,(ME.tx??ME.x)-dx*.085));return;}}if(pd&&!pd.drag&&performance.now()-pd.t>220)hold=e.clientX<innerWidth/2?-1:1;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);$('c').style.cursor=ray.intersectObjects(clickables).length?'pointer':'default';});
+$('c').addEventListener('pointermove',e=>{if(pd&&e.pointerType!=='mouse'){const dx=e.clientX-(pd.lx??pd.x);pd.lx=e.clientX;if(!pd.drag&&Math.abs(e.clientX-pd.x)>26&&performance.now()-pd.t<260)pd.drag=true;if(pd.drag){hold=0;ME.tx=Math.max(LO,Math.min(HI,(ME.tx??ME.x)-dx*.11));return;}}if(pd&&!pd.drag&&performance.now()-pd.t>220)hold=e.clientX<innerWidth/2?-1:1;m2.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(m2,cam);$('c').style.cursor=ray.intersectObjects(clickables).length?'pointer':'default';});
 /* menu */
 const menu=$('menu');SHOPS.filter(s=>s.p).forEach(s=>{const b=document.createElement('button');b.innerHTML=`<span>${s.p.title}</span><small>${s.kind==='pro'?s.p.zone:s.kind==='perso'?'Perso':''}</small>`;b.onclick=()=>{menu.classList.remove('open');$('b-menu').setAttribute('aria-expanded','false');if(!started)start();closePanel();fadeTo(s.x+.6);};menu.appendChild(b);});
 $('b-menu').onclick=()=>{const o=menu.classList.toggle('open');$('b-menu').setAttribute('aria-expanded',o);};
@@ -833,6 +855,18 @@ ticks.push(()=>{for(let k=0;k<70;k++){const i=(spI++)%NS;sp2[i*3]=camX+rnd(-16,1
  const sg=lab('MISE À JOUR EN COURS… 3 %',2.2,.3,'#050505','#35ff9b');sg.position.set(CX0-.2,2.2,2.2);scene.add(sg);
  ticks.push((t,dt)=>{hz.forEach(h=>h.visible=Math.sin(t*6)>0);fl2.intensity=22+10*Math.sin(t*23)*Math.sin(t*7.3)+6*Math.sin(t*41);FL.forEach(p=>{p.t+=dt*.9;if(p.t>1){p.t=0;p.sx=rnd(-.5,.5);}const u=p.t;p.sp.position.set(CX0+.5+p.sx*(1-u*.5),1.2+u*1.9,2.5+p.sx*.4);const sc=(.9-u*.6)*(1+.2*Math.sin(t*30+p.sx*9));p.sp.scale.set(sc,sc*1.4,1);p.sp.material.opacity=1-u;});SM.forEach(p=>{p.t+=dt*.22;if(p.t>1){p.t=0;p.sx=rnd(-.4,.4);}const u=p.t;p.sp.position.set(CX0+.5+p.sx+u*1.2,2.2+u*6,2.4);const sc=1+u*3.5;p.sp.scale.set(sc,sc,1);p.sp.material.opacity=.5*Math.sin(u*Math.PI);});});
  window.__crashX=CX0;}
+/* le portfolio dans le mobilier urbain : plaques de rue et panneaux d'affichage */
+{const dk=std('#121318',.4,{metalness:.5});
+ const plq=mk(512,300),pq=plq.getContext('2d');pq.fillStyle='#0b3a2a';pq.fillRect(0,0,512,300);pq.fillStyle='#103c9c';pq.fillRect(14,14,484,272);pq.fillStyle='#fff';pq.textAlign='center';pq.font='700 30px Arial';pq.fillText('18e Arr.',256,60);pq.font='700 30px Arial';pq.fillText('RUE',256,112);pq.font='900 58px Arial';pq.fillText('GARY LE GRILL',256,176,460);pq.font='400 24px Arial';pq.fillText('directeur artistique et développeur',256,222,460);pq.fillText('design · motion · code',256,256);const plT=T(plq);
+ [1,5,9,13,17].forEach(i=>{const p=new THREE.Mesh(new THREE.PlaneGeometry(1.0,.586),new THREE.MeshBasicMaterial({map:plT,color:'#b4b4b4'}));p.position.set((i+.5)*MOD-.62,3.05,-2.6);scene.add(p);});
+ const LN=['#ff2d78','#19a0ff','#35ff9b','#ffd400'];
+ const head=(q,t,sub)=>{q.fillStyle='#0a0a0e';q.fillRect(0,0,480,720);q.fillStyle='#ff2d78';q.fillRect(0,0,480,96);q.fillStyle='#fff';q.textAlign='left';q.font='900 46px "Space Grotesk",Arial';q.fillText(t,24,62,430);q.fillStyle='rgba(255,255,255,.6)';q.font='500 20px "JetBrains Mono",monospace';q.fillText(sub,24,134,430);};
+ const foot=(q)=>{q.fillStyle='#35ff9b';q.font='700 22px "JetBrains Mono",monospace';q.textAlign='left';q.fillText('▶ touche le panneau : CV express',24,692,430);};
+ const D=[(q)=>{head(q,'PORTFOLIO','ceci n\'est pas un jeu vidéo (enfin, si)');q.fillStyle='#fff';q.font='900 64px "Space Grotesk",Arial';q.fillText('GARY',24,230);q.fillText('LE GRILL',24,298);q.fillStyle='#ffd400';q.font='900 54px "Space Grotesk",Arial';q.fillText('DESIGN & CODE',24,386,430);q.fillStyle='#fff';q.font='500 26px "Space Grotesk",Arial';['Directeur artistique, motion','designer et développeur.','Freelance à Paris, 10 ans et plus.'].forEach((l,k)=>q.fillText(l,24,446+k*36,430));q.fillStyle='#ff2d78';q.font='700 28px "Space Grotesk",Arial';q.fillText('1 vitrine = 1 projet client',24,606,430);foot(q);},
+  (q)=>{head(q,'COMPÉTENCES','plan des lignes · correspondances partout');[['1','DESIGN',['direction artistique','identité, campagne, UI/UX']],['2','MOTION',['motion design, film','3D temps réel']],['3','CODE',['React, Three.js','Lovable, Bubble, Webflow, WordPress']],['4','IA',['image et vidéo génératives','du brief au livrable']]].forEach(([n,t,L],k)=>{const y=196+k*122;q.fillStyle=LN[k];q.fillRect(54,y-10,6,k<3?122:0);q.beginPath();q.arc(57,y,26,0,6.3);q.fill();q.fillStyle='#0a0a0e';q.font='900 30px Arial';q.textAlign='center';q.fillText(n,57,y+11);q.textAlign='left';q.fillStyle=LN[k];q.font='900 34px "Space Grotesk",Arial';q.fillText(t,104,y+6);q.fillStyle='#fff';q.font='500 21px "Space Grotesk",Arial';L.forEach((l,j)=>q.fillText(l,104,y+38+j*26,360));});foot(q);},
+  (q)=>{head(q,'CV EXPRESS','à lire en marchant');[['10 ans +','de freelance, agences et annonceurs'],['Paris','18e, et à distance'],['3 métiers','DA, motion designer, développeur'],['1 interlocuteur','de l\'idée à la mise en ligne']].forEach(([a,b],k)=>{const y=214+k*112;q.fillStyle=LN[k];q.font='900 50px "Space Grotesk",Arial';q.fillText(a,24,y,430);q.fillStyle='#fff';q.font='500 23px "Space Grotesk",Arial';q.fillText(b,24,y+36,430);});foot(q);},
+  (q)=>{head(q,'CLIENTS','ils sont passés dans la rue');q.fillStyle='#fff';q.font='700 31px "Space Grotesk",Arial';['Pernod Ricard · Martell','Sephora · Air France','Renault · Nissan','EDF · FDJ · Fnac','Micromania · MACSF','Tessan · Nostrum Care','Lunettes Pour Tous','Grimbergen · Au Bureau'].forEach((l,k)=>{q.fillStyle=k%2?'#fff':'#ffd400';q.fillText(l,24,196+k*58,430);});foot(q);}];
+ [[.5,0],[4.5,1],[8.5,2],[16.5,3]].forEach(([i,k])=>{const x=i*MOD+.55,z=-1.35;const G=new THREE.Group();const cc=mk(480,720);D[k](cc.getContext('2d'));const m=new THREE.MeshBasicMaterial({map:T(cc),color:new THREE.Color(1.15,1.15,1.15)});m.toneMapped=false;const fr=box(1.22,1.8,.16,dk);fr.position.y=2.0;G.add(fr);const p=new THREE.Mesh(new THREE.PlaneGeometry(1.1,1.65),m);p.position.set(0,2.0,.085);G.add(p);p.userData.spin=()=>openCV();clickables.push(p);const po=box(.14,1.1,.12,dk);po.position.y=.6;G.add(po);const cap=box(1.22,.05,.18,glow('#ff2d78',2));cap.position.y=2.93;G.add(cap);G.scale.setScalar(1.25);G.position.set(x,.1,-.9);scene.add(G);ticks.push(t=>{m.color.setScalar((t+i)%9>8.8?.5:1.15);});});}
 /* ---------- Son : pluie, nappe, pas, néons, basse du bar ---------- */
 let AC=null,AU=null,sndOn=true;
 function audioStart(){if(AC)return;try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
