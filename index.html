@@ -13,7 +13,7 @@
 /* Un seul monde, sombre : scène WebGL fixe derrière le texte. Tête chromée en ouverture,
    projets posés sur un plan 3D que le défilement fait glisser, reflets au sol, grain. */
 :root{
-  --bg:#07070a; --ink:#f1efe9; --mute:#8d8f99; --line:#22232b; --chrome:#c9cfdd; --accent:#ff2d78;
+  --bg:#07070a; --ink:#f1efe9; --mute:#8d8f99; --line:#22232b; --chrome:#c9cfdd; --accent:#ff4a1c;
   --display:'Syne','Arial Black',Arial,sans-serif; --body:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
   color-scheme:dark;
 }
@@ -90,10 +90,10 @@ body.loading .hero h1 .l>span{transform:translateY(105%)}
 section{padding:clamp(70px,10vw,150px) 0}
 .portal{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);align-items:center}
 .portal h2{font-size:clamp(46px,7.4vw,120px);text-transform:uppercase}
-.portal h2 i{font-style:normal;color:var(--accent);text-shadow:0 0 40px rgba(255,45,120,.7)}
+.portal h2 i{font-style:normal;color:var(--accent);text-shadow:0 0 40px rgba(255,74,28,.7)}
 .portal p{margin:22px 0 26px;max-width:26em;color:var(--chrome)}
 .door{position:relative;display:block;border-radius:22px;perspective:1200px}
-.door .glass{position:relative;border-radius:22px;overflow:hidden;transform:rotateY(-9deg) rotateX(3deg);transition:transform .9s cubic-bezier(.16,1,.3,1);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 40px 90px -30px rgba(255,45,120,.45);-webkit-box-reflect:below 10px linear-gradient(transparent 62%,rgba(0,0,0,.32))}
+.door .glass{position:relative;border-radius:22px;overflow:hidden;transform:rotateY(-9deg) rotateX(3deg);transition:transform .9s cubic-bezier(.16,1,.3,1);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 40px 90px -30px rgba(255,74,28,.45);-webkit-box-reflect:below 10px linear-gradient(transparent 62%,rgba(0,0,0,.32))}
 .door:hover .glass{transform:rotateY(0) rotateX(0)}
 .door img{width:100%;aspect-ratio:16/10;object-fit:cover;transform:scale(1.06);transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
 .door:hover img{transform:scale(1)}
@@ -101,6 +101,20 @@ section{padding:clamp(70px,10vw,150px) 0}
 .door:hover .glass::after{transform:translateX(30%)}
 .door .tagk{position:absolute;left:18px;top:16px;z-index:2;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:rgba(7,7,10,.6);backdrop-filter:blur(8px)}
 
+.play{padding:0 0 clamp(40px,6vw,90px)}
+.screen{position:relative;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 50px 120px -40px rgba(255,74,28,.35)}
+.screen img{width:100%;aspect-ratio:16/8.2;object-fit:cover;object-position:50% 60%;transition:transform 1.6s cubic-bezier(.16,1,.3,1)}
+.screen:hover img{transform:scale(1.04)}
+.screen .ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3.4vw,44px);background:linear-gradient(90deg,rgba(7,7,10,.9),rgba(7,7,10,.35) 46%,rgba(7,7,10,0) 70%),linear-gradient(0deg,rgba(7,7,10,.75),rgba(7,7,10,0) 45%)}
+.screen .ov h2{font-size:clamp(40px,7vw,112px);text-transform:uppercase}
+.screen .ov p:not(.mono){max-width:26em;margin:16px 0 22px;color:var(--chrome)}
+.screen .go{border:0;cursor:pointer;font-family:var(--body)}
+.screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+#quit{display:none;position:absolute;right:14px;bottom:14px;z-index:3;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(7,7,10,.7);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:9px 14px;cursor:pointer;backdrop-filter:blur(8px)}
+.screen.live{position:fixed;inset:0;z-index:60;border-radius:0;box-shadow:none}
+.screen.live img,.screen.live .ov{display:none}.screen.live #quit{display:block}
+body.playing{overflow:hidden}body.playing #grain,body.playing #cur{display:none}
+@media (max-width:860px){.screen img{aspect-ratio:4/5}.screen .ov{background:linear-gradient(0deg,rgba(7,7,10,.95),rgba(7,7,10,.3) 60%,rgba(7,7,10,.1))}}
 /* à propos */
 .about{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:22px}
 .about .big{grid-column:1/-1;font:700 clamp(28px,4.6vw,72px)/1.02 var(--display);letter-spacing:-.04em;max-width:17em}
@@ -174,7 +188,7 @@ footer .fl a:hover{color:var(--ink)}
 <div id="cur" aria-hidden="true">Voir</div>
 <header class="top"><div class="wrap">
   <a class="logo" href="#/">Gary Le Grill</a>
-  <nav aria-label="Navigation principale"><a class="h" href="#/" data-go="plan">Projets</a><a class="h" href="#/" data-go="labo">Labo 3D</a><a class="h" href="#/" data-go="apropos">À propos</a><a href="#/" data-go="contact">Contact</a></nav>
+  <nav aria-label="Navigation principale"><a class="h" href="#/" data-go="plan">Projets</a><a class="h" href="#/" data-go="jeu">Labo 3D</a><a class="h" href="#/" data-go="apropos">À propos</a><a href="#/" data-go="contact">Contact</a></nav>
 </div></header>
 <main id="app"></main>
 <footer id="contact"><div class="wrap">
@@ -189,9 +203,9 @@ import * as THREE from 'three';
    Contenu du site. Ajouter un projet, une app ou une expérience 3D =
    ajouter une entrée dans le tableau correspondant.
 ------------------------------------------------------------------ */
-const HOSTED=/garylegrill|ovh\.net/.test(location.hostname);const MEDIA=HOSTED?'./rue/':'./';
+const HOSTED=true;const MEDIA='./rue/';
 const LABS=[
- {slug:'rue',n:'01',title:'La rue, la nuit',img:'rue.jpg',url:HOSTED?'./rue/':'https://claude.ai/artifact/DWygo74qXnWg1hpANEARvQ',
+ {slug:'rue',n:'01',title:'La rue, la nuit',img:'rue.jpg',url:'./rue/index.html',
   line:'Mon portfolio transformé en rue de Paris à parcourir. Des pavés mouillés, des néons, des robots, et un projet derrière chaque vitrine.',
   meta:['Three.js','WebAudio','17 vitrines','À jouer au clavier ou au doigt']}
 ];
@@ -213,7 +227,7 @@ const APPS=[
 const CLIENTS=['Pernod Ricard','Sephora','Air France','Renault','Nissan','EDF','FDJ','Fnac','Micromania','MACSF','Tessan','Nostrum Care','Lunettes Pour Tous','Grimbergen','Au Bureau'];
 
 
-const ALL=[...LABS.map(x=>({...x,kind:'labo',pal:['#12060f','#ff2d78'],brand:'Labo 3D',tags:'Three.js · à jouer',cover:null,file:x.img})),...PROJECTS.map(x=>({...x,kind:'design'})),...APPS.map(x=>({...x,kind:'code',tags:x.status[1]}))];
+const ALL=[...LABS.map(x=>({...x,kind:'labo',pal:['#12060f','#ff4a1c'],brand:'Labo 3D',tags:'Three.js · à jouer',cover:null,file:x.img})),...PROJECTS.map(x=>({...x,kind:'design'})),...APPS.map(x=>({...x,kind:'code',tags:x.status[1]}))];
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 /* ---------- médias chargés à part ---------- */
@@ -244,15 +258,19 @@ function home(){const lab=LABS[0];
       <span class="scrollhint">Défile, ça bouge ↓</span>
     </div>
   </div>
-  <div class="plane" id="plan"><div class="stage" id="stage"><div class="wrap" style="width:100%"><div class="head"><p class="mono" id="kind">Le plan · bouge la souris, défile, clique</p><ol class="idx" id="idx">${ALL.map((p,i)=>`<li><a href="${p.kind==='labo'?p.url:'#/'+(p.kind==='design'?'projets':'apps')+'/'+p.slug}" data-i="${i}" ${p.kind==='labo'?ext:''}><span>${String(i).padStart(2,'0')}</span>${esc(p.title)}<em>//${p.kind==='labo'?'Labo':p.kind==='design'?'Design':'Code'}</em></a></li>`).join('')}</ol></div></div>
+  <section id="jeu" class="play"><div class="wrap">
+    <div class="screen" id="screen">
+      <img src="${lab.img}" alt="Une rue de Paris la nuit en 3D : façades au néon, robots en terrasse, pavés mouillés">
+      <div class="ov"><p class="mono">Labo 3D · expérience ${lab.n} · à jouer</p>
+        <div><h2>La rue, la nuit</h2><p>${esc(lab.line)}</p><button type="button" class="go" data-play>Jouer en plein écran <span aria-hidden="true">▶</span></button></div></div>
+      <button type="button" id="quit" aria-label="Quitter le jeu">Quitter ✕</button>
+    </div>
+  </div></section>
+  <div class="plane" id="plan"><div class="stage" id="stage"><div class="wrap" style="width:100%"><div class="head"><p class="mono" id="kind">Le plan · bouge la souris, défile, clique</p><ol class="idx" id="idx">${ALL.map((p,i)=>`<li><a href="${p.kind==='labo'?'#/':'#/'+(p.kind==='design'?'projets':'apps')+'/'+p.slug}" data-i="${i}" ${p.kind==='labo'?'data-play':''}><span>${String(i).padStart(2,'0')}</span>${esc(p.title)}<em>//${p.kind==='labo'?'Labo':p.kind==='design'?'Design':'Code'}</em></a></li>`).join('')}</ol></div></div>
     <div class="wrap" style="width:100%"><div class="cap" id="cap"><h2><span id="ct"></span></h2><div class="side"><p class="mono" id="cm"></p><p id="cl"></p><a class="go" id="cgo" href="#/">Voir le projet <span aria-hidden="true">→</span></a></div></div><div class="bar"><i id="bar"></i></div></div>
   </div></div>
   <ul class="sr">${[...PROJECTS.map(p=>`<li><a href="#/projets/${p.slug}">${esc(p.title)}</a></li>`),...APPS.map(p=>`<li><a href="#/apps/${p.slug}">${esc(p.title)}</a></li>`)].join('')}</ul>
-  <section id="labo"><div class="wrap portal">
-    <div><p class="mono">Labo 3D · expérience ${lab.n}</p><h2 style="margin-top:16px">La rue,<br><i>la nuit</i></h2>
-      <p>${esc(lab.line)}</p><a class="go" href="${lab.url}" ${ext}>Entrer dans la rue <span aria-hidden="true">→</span></a></div>
-    <a class="door" href="${lab.url}" ${ext} aria-label="Ouvrir La rue, la nuit"><span class="tagk">À jouer · Three.js</span><div class="glass"><img src="${lab.img}" alt="Une rue de Paris la nuit en 3D : façades au néon, robots en terrasse, pavés mouillés"></div></a>
-  </div></section>
+
   <div class="marq" aria-label="Clients : ${CLIENTS.join(', ')}"><div aria-hidden="true">${[...CLIENTS,...CLIENTS].map(c=>`<span>${esc(c)}</span>`).join('')}</div></div>
   <section id="apropos"><div class="wrap about">
     <p class="mono" style="grid-column:1/-1">À propos</p>
@@ -289,19 +307,21 @@ const TL=new THREE.TextureLoader();
 const tex=(src,cb)=>TL.load(src,t=>{t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;cb(t);});
 
 /* la tête : le portrait devient un relief chromé qui ondule sous le curseur */
-const headU={t:{value:null},time:{value:0},m:{value:new THREE.Vector2(.5,.5)},h:{value:0},a:{value:0}};
-const head=new THREE.Mesh(new THREE.PlaneGeometry(1,1.25,180,220),new THREE.ShaderMaterial({uniforms:headU,transparent:true,depthWrite:false,
- vertexShader:`uniform sampler2D t;uniform float time,h;uniform vec2 m;varying vec2 vUv;varying float vL;
- void main(){vUv=uv;float l=dot(texture2D(t,uv).rgb,vec3(.299,.587,.114));vL=l;vec3 p=position;float d=distance(uv,m);
- float rip=sin(d*38.-time*6.)*exp(-d*6.)*h;p.z+=l*.4+rip*.14;p.x+=sin(uv.y*80.+time*3.)*.003*(1.+h*5.);
- float g=step(.992,fract(sin(floor(uv.y*26.)*12.9898+floor(time*5.))*43758.5));p.x+=g*.07;
+const headU={t:{value:null},dp:{value:null},time:{value:0},m:{value:new THREE.Vector2(.5,.5)},h:{value:0},a:{value:0},rot:{value:new THREE.Vector2()}};
+const head=new THREE.Mesh(new THREE.PlaneGeometry(1,1.174,220,258),new THREE.ShaderMaterial({uniforms:headU,transparent:true,depthWrite:false,
+ vertexShader:`uniform sampler2D dp;uniform float time,h;uniform vec2 m;varying vec2 vUv;
+ void main(){vUv=uv;float d=texture2D(dp,uv).r;vec3 p=position;float q=distance(uv,m);
+ p.z+=d*.5+sin(q*34.-time*5.)*exp(-q*7.)*h*.05*step(.03,d);
  gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`,
- fragmentShader:`uniform sampler2D t;uniform float time,a,h;varying vec2 vUv;varying float vL;
- void main(){float k=smoothstep(.04,.92,vL);float b=.5+.5*sin(k*13.+time*.7+vUv.y*4.);
- vec3 col=mix(vec3(.02,.02,.05),vec3(.5,.56,.72),k);col=mix(col,vec3(1.,.97,1.),smoothstep(.62,1.,k));
- col+=vec3(1.,.18,.47)*b*.22*k+vec3(.2,.85,1.)*(1.-b)*.14*k;col*=.84+.16*sin(vUv.y*640.+time*9.);
- float e=smoothstep(0.,.14,vUv.x)*smoothstep(1.,.86,vUv.x)*smoothstep(0.,.12,vUv.y)*smoothstep(1.,.84,vUv.y);
- gl_FragColor=vec4(col,e*a*smoothstep(.0,.16,k+.08));}`}));
+ fragmentShader:`uniform sampler2D t,dp;uniform float time,a;uniform vec2 rot;varying vec2 vUv;
+ void main(){float d=texture2D(dp,vUv).r;vec2 e=vec2(5./512.,5./601.);
+ float dx=texture2D(dp,vUv+vec2(e.x,0.)).r-texture2D(dp,vUv-vec2(e.x,0.)).r;float dy=texture2D(dp,vUv+vec2(0.,e.y)).r-texture2D(dp,vUv-vec2(0.,e.y)).r;
+ vec3 n=normalize(vec3(-dx*5.5+rot.x,-dy*5.5+rot.y,1.));vec3 r=reflect(vec3(0.,0.,-1.),n);
+ float up=r.y*.5+.5;vec3 env=mix(vec3(.015,.02,.035),vec3(.72,.78,.9),smoothstep(.3,.95,up));
+ env+=vec3(1.)*smoothstep(.55,1.,sin(r.x*3.+1.1+time*.15)*.5+.5)*.16;env+=vec3(1.,.42,.16)*smoothstep(.25,.9,-r.x)*.42;env+=vec3(.25,.6,1.)*smoothstep(.3,.95,r.x)*.3;
+ float l=dot(texture2D(t,vUv).rgb,vec3(.299,.587,.114));vec3 col=env*(.4+1.5*l)+vec3(.03,.035,.05);
+ col+=pow(max(dot(n,normalize(vec3(.35,.55,.75))),0.),40.)*.55;col+=pow(1.-max(n.z,0.),2.5)*vec3(.5,.6,.8)*.25;
+ gl_FragColor=vec4(col,smoothstep(.05,.2,d)*a);}`}));
 scene.add(head);
 
 /* le plan : toutes les cartes posées sur un sol incliné qui file vers l'horizon.
@@ -315,7 +335,7 @@ const cardMat=()=>new THREE.ShaderMaterial({transparent:true,depthWrite:false,un
  float wipe=1.-smoothstep(rv*1.12-.1,rv*1.12,vUv.y);
  float g=dot(c,vec3(.3,.59,.11));c=mix(vec3(g)*.28,c,dim);c*=mix(.5,1.,act)*fog;
  c+=smoothstep(.18,0.,abs(vUv.x*.7+vUv.y-.2-act*1.2))*.14*act;
- c+=(1.-smoothstep(0.,.05,abs(vUv.y-rv*1.12+.03)))*vec3(1.,.18,.47)*.7*(1.-rv)*step(.02,rv);
+ c+=(1.-smoothstep(0.,.05,abs(vUv.y-rv*1.12+.03)))*vec3(1.,.29,.11)*.7*(1.-rv)*step(.02,rv);
  gl_FragColor=vec4(c,m*wipe*fog);}`});
 const strip=new THREE.Group(),inner=new THREE.Group();strip.add(inner);scene.add(strip);
 let cards=[],CW=1,CH=1.3,GX=1.2,GY=1.6,COLS=3,ROWS=4,pT=0,pS=0,active=-1,grid=null;
@@ -345,15 +365,15 @@ function layout(){const narrow=VW<760;COLS=narrow?2:3;ROWS=Math.ceil(ALL.length/
 /* ---------- boucle ---------- */
 let mx=.5,my=.5,hov=0,hovT=0,onHome=true,headA=0,panX=0,tiltY=0,idxHover=-1,stageA=0;const ray=new THREE.Raycaster(),ndc=new THREE.Vector2(-9,-9);let over=null;
 const el=id=>document.getElementById(id);const V3=new THREE.Vector3();
-const hrefOf=p=>p.kind==='labo'?p.url:`#/${p.kind==='design'?'projets':'apps'}/${p.slug}`;
+const hrefOf=p=>p.kind==='labo'?'#/':`#/${p.kind==='design'?'projets':'apps'}/${p.slug}`;
 const match=p=>mode==='tout'||p.kind===mode||p.kind==='labo';
 function caption(i){const p=ALL[i];const cap=el('cap');if(!p||!cap)return;cap.classList.add('sw');document.querySelectorAll('#idx a').forEach(a=>a.classList.toggle('on',+a.dataset.i===i));
   setTimeout(()=>{el('ct').textContent=p.title;el('cm').textContent=p.kind==='design'?`${p.brand} · ${p.year} · ${p.tags}`:`${p.brand} · ${p.tags}`;el('cl').textContent=p.line;
-    const go=el('cgo');go.href=hrefOf(p);if(p.kind==='labo'&&!HOSTED){go.target='_blank';go.rel='noopener';}else go.removeAttribute('target');go.firstChild.textContent=p.kind==='labo'?'Entrer dans la rue ':p.kind==='design'?'Voir le projet ':'Voir l\'app ';cap.classList.remove('sw');},RM?0:170);}
+    const go=el('cgo');go.href=hrefOf(p);if(p.kind==='labo')go.setAttribute('data-play','');else go.removeAttribute('data-play');go.firstChild.textContent=p.kind==='labo'?'Entrer dans la rue ':p.kind==='design'?'Voir le projet ':'Voir l\'app ';cap.classList.remove('sw');},RM?0:170);}
 function frame(now){requestAnimationFrame(frame);const t=now/1000;headU.time.value=t;
   const st=el('stage'),pl=el('plan');const sy=scrollY;
-  headA+=((onHome&&headU.t.value?1:0)-headA)*.06;headU.a.value=headA*Math.max(0,1-sy/(VH*.9));hov+=(hovT-hov)*.08;headU.h.value=hov;
-  const narrow=VW<760;head.position.set(narrow?0:WW*.2,(narrow?WH*.14:.05)+sy/VH*WH*.7,0);head.rotation.y=(mx-.5)*.5;head.rotation.x=(my-.5)*.3;head.visible=headU.a.value>.01;
+  headA+=((onHome&&headU.t.value&&headU.dp.value?1:0)-headA)*.06;headU.a.value=headA*Math.max(0,1-sy/(VH*.9));hov+=(hovT-hov)*.08;headU.h.value=hov;
+  const narrow=VW<760;head.position.set(narrow?0:WW*.2,(narrow?WH*.14:.05)+sy/VH*WH*.7,0);head.rotation.y=(mx-.5)*.75;head.rotation.x=(my-.5)*.4;headU.rot.value.set((mx-.5)*1.1,-(my-.5)*.8);head.visible=headU.a.value>.01;
   if(onHome&&st&&pl){const r=pl.getBoundingClientRect(),tot=r.height-VH;pT=tot>0?Math.min(1,Math.max(0,-r.top/tot)):0;pS+=(pT-pS)*(RM?1:.07);const v=THREE.MathUtils.clamp((pT-pS)*10,-1,1);
     const sr=st.getBoundingClientRect(),vis=sr.top<VH*.75&&sr.bottom>VH*.2;stageA+=((vis?1:0)-stageA)*.08;
     const cy=-((sr.top+sr.height*.5)/VH-.5)*WH;panX+=(-(mx-.5)*GX*(narrow?.25:.7)-panX)*.05;tiltY+=((mx-.5)*-.16-tiltY)*.05;
@@ -375,8 +395,15 @@ let dragOverLink=false;
 addEventListener('pointermove',e=>{mx=e.clientX/VW;my=e.clientY/VH;ndc.set(mx*2-1,-(my*2-1));el('cur').style.transform=`translate(${e.clientX}px,${e.clientY}px)`;dragOverLink=!!e.target.closest('a,button');
   const a=e.target.closest('#idx a');idxHover=a?+a.dataset.i:-1;const hc=VW<760?.5:.7;
   hovT=onHome&&scrollY<VH*.5&&Math.abs(mx-hc)<.2&&Math.abs(my-.45)<.36?1:0;headU.m.value.set(THREE.MathUtils.clamp((mx-hc)/.36+.5,0,1),THREE.MathUtils.clamp(1-((my-.45)/.7+.5),0,1));});
-addEventListener('click',e=>{if(e.target.closest('a,button'))return;if(over){const h=hrefOf(over.p);if(over.p.kind==='labo'&&!HOSTED)open(h,'_blank','noopener');else location.href=h;}});
+addEventListener('click',e=>{if(e.target.closest('a,button'))return;if(over){if(over.p.kind==='labo')play();else location.href=hrefOf(over.p);}});
 addEventListener('resize',size);
+
+/* ---------- le jeu : se lance dans la page et passe en plein écran ---------- */
+function play(){const sc=el('screen');if(!sc||sc.classList.contains('live'))return;const f=document.createElement('iframe');f.src=LABS[0].url;f.title='La rue, la nuit';f.allow='fullscreen; autoplay';f.setAttribute('allowfullscreen','');sc.insertBefore(f,el('quit'));
+  sc.classList.add('live');document.body.classList.add('playing');f.addEventListener('load',()=>f.focus());try{const r=sc.requestFullscreen&&sc.requestFullscreen();if(r&&r.catch)r.catch(()=>{});}catch(_){}}
+function stop(){const sc=el('screen');if(!sc)return;const f=sc.querySelector('iframe');if(f)f.remove();sc.classList.remove('live');document.body.classList.remove('playing');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});}
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&el('screen')&&el('screen').classList.contains('live')&&fsWas)stop();fsWas=!!document.fullscreenElement;});let fsWas=false;
+document.addEventListener('click',e=>{if(e.target.closest('#quit')){stop();return;}const p=e.target.closest('[data-play]');if(p){e.preventDefault();e.stopPropagation();if(!onHome){pending='jeu';location.hash='#/';return;}play();}},true);
 
 /* ---------- routeur avec rideau ---------- */
 const main=el('app');let pending=null,first=true;
@@ -394,6 +421,7 @@ document.addEventListener('click',e=>{const sw=e.target.closest('button[data-mod
 addEventListener('hashchange',route);
 
 /* ---------- démarrage : compteur et noms des projets qui défilent ---------- */
+import('./head.js').then(m=>TL.load(m.default.depth,t=>{t.minFilter=THREE.LinearFilter;headU.dp.value=t;}));
 size();route();
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{build();});
 requestAnimationFrame(frame);
