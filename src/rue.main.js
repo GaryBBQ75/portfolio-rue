@@ -812,8 +812,8 @@ const camA=new THREE.Vector3();let focusS=null,camF=0,camK=0,camX=0,last=perform
 function tick(now){requestAnimationFrame(tick);const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now;tt+=dt;
   let dir=0;if(started&&!panelOpen){if(keys['arrowright']||keys['d'])dir+=1;if(keys['arrowleft']||keys['q']||keys['a'])dir-=1;if(!dir&&hold)dir=hold;}
   const run=keys['shift'];let target=0;
-  holdT=hold?holdT+dt:0;if(dir){target=dir*((run||holdT>.45)?RUN*(hold?1.3:1):WALK*(hold?1.4:1));ME.tx=null;ME.then=null;}
-  else if(ME.tx!=null){const d=ME.tx-ME.x;if(Math.abs(d)<.06){ME.tx=null;if(ME.then){near=ME.then;ME.then=null;enter();}}else target=Math.sign(d)*Math.min(Math.abs(d)>5?RUN*(TOUCH?1.35:1):WALK*(TOUCH?1.5:1),Math.abs(d)*3+.8);}
+  holdT=hold?holdT+dt:0;if(dir){target=dir*WALK*1.2;ME.tx=null;ME.then=null;}
+  else if(ME.tx!=null){const d=ME.tx-ME.x;if(Math.abs(d)<.06){ME.tx=null;if(ME.then){near=ME.then;ME.then=null;enter();}}else target=Math.sign(d)*Math.min(WALK*1.35,Math.abs(d)*3+.8);}
   ME.v+=(target-ME.v)*Math.min(1,dt*9);ME.x=Math.max(LO,Math.min(HI,ME.x+ME.v*dt));
   if(Math.abs(ME.v)>.15)ME.face=Math.sign(ME.v);
   const sp=Math.abs(ME.v),a=Math.min(1,sp/WALK),rn=Math.max(0,Math.min(1,(sp-WALK)/(RUN-WALK)));ME.ph+=dt*(2.6+sp*1.55)*(sp>.1?1:0);
