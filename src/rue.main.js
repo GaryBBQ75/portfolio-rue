@@ -809,10 +809,15 @@ window.__media=enterMedia;
 
 /* ---------- Boucle ---------- */
 const camA=new THREE.Vector3();let focusS=null,camF=0,camK=0,camX=0,last=performance.now(),tt=0;const lookV=new THREE.Vector3();
-function tick(now){requestAnimationFrame(tick);const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now;tt+=dt;
+/* mode vitrine : le jeu tourne en démonstration muette dans le site, jusqu'à ce qu'on clique */
+const EMBED=new URLSearchParams(location.search).has('embed');let demo=false,demoDir=1,paused=false;
+function demoOn(){demo=true;document.documentElement.classList.add('embed');if(panelOpen)closePanel();if(AC&&AU)AU.master.gain.setTargetAtTime(0,AC.currentTime,.1);}
+function demoOff(){demo=false;hold=0;document.documentElement.classList.remove('embed');if(!AC)audioStart();else if(AC.state==='suspended')AC.resume();if(AU)AU.master.gain.setTargetAtTime(sndOn?.75:0,AC.currentTime,.4);}
+if(EMBED){started=true;$('intro').classList.add('off');demoOn();ME.x=MOD*.6;addEventListener('message',e=>{if(e.origin!==location.origin)return;const d=e.data;if(d==='rue:play')demoOff();else if(d==='rue:idle')demoOn();else if(d==='rue:pause')paused=true;else if(d==='rue:resume')paused=false;});}
+function tick(now){requestAnimationFrame(tick);if(paused){last=now;return;}if(demo&&!INSIDE){if(ME.x>HI-4)demoDir=-1;else if(ME.x<LO+4)demoDir=1;hold=demoDir;}const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now;tt+=dt;
   let dir=0;if(started&&!panelOpen){if(keys['arrowright']||keys['d'])dir+=1;if(keys['arrowleft']||keys['q']||keys['a'])dir-=1;if(!dir&&hold)dir=hold;}
   const run=keys['shift'];let target=0;
-  holdT=hold?holdT+dt:0;if(dir){target=dir*WALK*1.2;ME.tx=null;ME.then=null;}
+  holdT=hold?holdT+dt:0;if(dir){target=dir*WALK*(demo?.6:1.2);ME.tx=null;ME.then=null;}
   else if(ME.tx!=null){const d=ME.tx-ME.x;if(Math.abs(d)<.06){ME.tx=null;if(ME.then){near=ME.then;ME.then=null;enter();}}else target=Math.sign(d)*Math.min(WALK*1.35,Math.abs(d)*3+.8);}
   ME.v+=(target-ME.v)*Math.min(1,dt*9);ME.x=Math.max(LO,Math.min(HI,ME.x+ME.v*dt));
   if(Math.abs(ME.v)>.15)ME.face=Math.sign(ME.v);
