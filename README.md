@@ -1,15 +1,10 @@
-# portfolio-rue
+# garylegrill.com
 
-Prototypes du portfolio de Gary Le Grill. Site statique, sans build.
+Site principal (accueil, projets, apps) à la racine : `index.html`, un seul fichier, tout le contenu est dans les tableaux `LABS`, `PROJECTS`, `APPS` en haut du script.
 
-- `/` : la rue la nuit (Piste C). Three.js r170 chargé depuis jsDelivr.
-  - `index.html` : la page (le script est en ligne dans la page)
-  - `src/rue.main.js` : la source du script, pour l'éditer plus facilement
-  - `xbot.js` : mannequin animé (modèle d'exemple three.js, encodé en base64)
-  - `martell.js` : film Martell compressé et images tirées du film (base64)
-- `/etabli/` : l'établi 3D (Piste A)
-- `/bureau/` : le bureau à explorer, version jeu (Piste B)
+Expériences 3D, chacune dans son dossier :
 
-## Déploiement Coolify
+- `rue/` : La rue, la nuit (source lisible dans `src/rue.main.js`)
+- `etabli/`, `bureau/` : anciennes pistes
 
-Nouvelle ressource, dépôt GitHub, build pack « Static » (ou Nixpacks), dossier de publication `/`.
+Pour ajouter une expérience : créer un dossier, puis ajouter une entrée dans `LABS`.
